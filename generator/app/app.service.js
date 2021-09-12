@@ -36,21 +36,21 @@ const getGeneratedFilePath = (fileType, options) => {
   const isMultiWordsFile = fileNameArray.length > 1;
 
   // 文件存放位置
-  let fileFulllPath = [];
+  let fileFullPath = [];
 
   if (filePath) {
     // 3
     const filePathArray = filePath.split('/');
-    fileFulllPath = ['src', ...filePathArray, fileFullName];
+    fileFullPath = ['src', ...filePathArray, fileFullName];
   } else if (isMultiWordsFile) {
     // 2
-    fileFulllPath = ['src', ...fileNameArray, fileFullName];
+    fileFullPath = ['src', ...fileNameArray, fileFullName];
   } else {
     // 1
-    fileFulllPath = ['src', fileName, fileFullName];
+    fileFullPath = ['src', fileName, fileFullName];
   }
 
-  return path.join(...fileFulllPath);
+  return path.join(...fileFullPath);
 };
 
 /**
@@ -90,4 +90,56 @@ const getParentName = (options) => {
   return last(options.parent.split('/'));
 };
 
-module.exports = { getGeneratedFilePath, getParentFilePath, getParentName };
+/**
+ * 获取导入路径
+ */
+const getGeneratedFileImportPath = (fileType, options) => {
+  /**
+   * 1. --component comment
+   *    -> src/comment/comment.vue
+   *
+   * 2. --component comment-index
+   *    ->src/comment/index/comment-index.vue
+   *
+   * 3. --component comment-list --path comment/index/components
+   *    ->src/comment/index/components/comment-list.vue
+   */
+
+  const { [fileType]: fileName, path: filePath } = options;
+
+  // 带后缀的文件名
+  let fileFullName;
+
+  switch (fileType) {
+    case 'component':
+      fileFullName = fileName;
+      break;
+  }
+
+  const fileNameArray = fileName.split('-');
+  const isMultiWordsFile = fileNameArray.length > 1;
+
+  // 文件存放位置
+  let fileImportPath = [];
+
+  if (filePath) {
+    // 3
+    const filePathArray = filePath.split('/');
+    fileImportPath = ['@', ...filePathArray, fileFullName];
+  } else if (isMultiWordsFile) {
+    // 2
+    fileImportPath = ['@', ...fileNameArray, fileFullName];
+  } else {
+    // 1
+    fileImportPath = ['@', fileName, fileFullName];
+  }
+
+  return fileImportPath.join('/');
+};
+
+module.exports = {
+  getGeneratedFilePath,
+  getParentFilePath,
+  getParentName,
+  getGeneratedFileImportPath,
+};

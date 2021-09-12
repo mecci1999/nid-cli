@@ -82,4 +82,12 @@ const getParentFilePath = (fileType, options) => {
   return path.join(parentFilePath);
 };
 
-module.exports = { getGeneratedFilePath, getParentFilePath };
+/**
+ * 获取父辈名
+ */
+const getParentName = (options) => {
+  // --parent comment/index/comment-index
+  return last(options.parent.split('/'));
+};
+
+module.exports = { getGeneratedFilePath, getParentFilePath, getParentName };

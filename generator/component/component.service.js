@@ -23,7 +23,7 @@ const getComponentName = (options) => {
 
   // 获得组件名称
   const componentNamePascalCase = startCase(
-    camelCase(componentName).replace(' ', ''),
+    camelCase(componentName).replace(/ /g, ''),
   );
 
   return { componentName, componentNamePascalCase };

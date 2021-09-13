@@ -164,4 +164,5 @@ module.exports = {
   getParentName,
   getGeneratedFileImportPath,
   getProjectFileContent,
+  insertFileContent,
 };

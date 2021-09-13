@@ -23,8 +23,9 @@ const getComponentName = (options) => {
   const { component: componentName } = options;
 
   // 获得组件名称
-  const componentNamePascalCase = startCase(
-    camelCase(componentName).replace(/ /g, ''),
+  const componentNamePascalCase = startCase(camelCase(componentName)).replace(
+    / /g,
+    '',
   );
 
   return { componentName, componentNamePascalCase };
@@ -37,7 +38,7 @@ const getComponentImportStatement = (options) => {
   const { componentNamePascalCase } = getComponentName(options);
   const componentImportPath = getGeneratedFileImportPath('component', options);
 
-  return `import ${componentNamePascalCase} from ${componentImportPath}`;
+  return `import ${componentNamePascalCase} from '${componentImportPath};'`;
 };
 
 /**

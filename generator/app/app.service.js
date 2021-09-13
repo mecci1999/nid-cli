@@ -79,7 +79,7 @@ const getParentFilePath = (fileType, options) => {
     parentFilePath = ['src', parent, parentFileName];
   }
 
-  return path.join(parentFilePath);
+  return path.join(...parentFilePath);
 };
 
 /**
